@@ -8,6 +8,7 @@ import '../../widgets/app_logo.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../utils/admin_credentials.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,12 +29,19 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _submitLogin() {
+   void _submitLogin() {
     if (_formKey.currentState!.validate()) {
+    if (AdminCredentials.isAdmin(
+        _emailController.text,
+        _passwordController.text,
+      )) {
+        Navigator.pushReplacementNamed(context, AppRoutes.adminDashboard);
+        return;
+      }
+ 
       Navigator.pushReplacementNamed(context, AppRoutes.roleSelection);
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.register);
+                        Navigator.pushNamed(context, AppRoutes.roleSelection);
                       },
                       child: Text(
                         "Register",

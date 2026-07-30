@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spotme/screens/auth/register_screen.dart';
 
 import '../../providers/player_providers.dart';
 import '../../utils/app_colors.dart';
@@ -214,7 +215,7 @@ class _ChooseSportScreenState extends State<ChooseSportScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (_) =>
-                              ScoutNavigationScreen(selectedSport: sportName),
+                              RegisterScreen(),
                         ),
                       );
                       return;

@@ -23,6 +23,7 @@ import 'app_routes.dart';
 
 import '../screens/subscription/scout_subscription_screen.dart';
 import '../screens/subscription/player_subscription_screen.dart';
+import '../screens/admin/admin_dashboard_screen.dart';
 
 // import '../screens/navigation/player_navigation_screen.dart';
 // import '../screens/navigation/scout_navigation_screen.dart';
@@ -60,6 +61,8 @@ class AppPages {
 
 AppRoutes.scoutSubscription: (_) =>
     const ScoutSubscriptionScreen(),
+
+    AppRoutes.adminDashboard: (_) => const AdminDashboardScreen(),
   
   };
 }

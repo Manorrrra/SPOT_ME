@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spotme/screens/scout/home.dart';
 
 import '../../models/subscription_plan.dart';
 import '../../providers/subscription_provider.dart';
@@ -10,6 +11,7 @@ import '../../widgets/custom_button.dart';
 
 import '../player/choose_sport_screen.dart';
 import '../player/player_home_screen.dart';
+import '../navigation/scout_navigation_screen.dart';
 // import '../scout/scout_dashboard_screen.dart';
 
 // import '../scout/home.dart';
@@ -251,31 +253,32 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     Navigator.pop(context); // يقفل الـ Dialog
 
                                     final isScout =
-    provider.currentPlan?.userType == UserType.scout;
+                                        provider.currentPlan?.userType ==
+                                        UserType.scout;
 
-Navigator.pop(context);
+                                    Navigator.pop(context);
 
-if (isScout) {
-  Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(
-      builder: (_) => const ChooseSportScreen(
-        forScout: true,
-      ),
-    ),
-    (route) => false,
-  );
-} else {
-  Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(
-      builder: (_) => PlayerHomeScreen(
-        selectedSport: widget.selectedSport,
-      ),
-    ),
-    (route) => false,
-  );
-}
+                                    if (isScout) {
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => ScoutNavigationScreen(
+                                            selectedSport: widget.selectedSport,
+                                          ),
+                                        ),
+                                        (route) => false,
+                                      );
+                                    } else {
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => PlayerHomeScreen(
+                                            selectedSport: widget.selectedSport,
+                                          ),
+                                        ),
+                                        (route) => false,
+                                      );
+                                    }
                                   },
 
                                   child: const Text("OK"),

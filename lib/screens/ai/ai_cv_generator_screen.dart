@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:spotme/utils/app_routes.dart';
 
 // import '../../utils/app_colors.dart';
 import '../../widgets/custom_app_bar.dart';
@@ -149,7 +150,12 @@ class AiCvGeneratorScreen extends StatelessWidget {
                         BorderRadius.circular(15),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                          context,
+                          AppRoutes.subscription,
+                        );
+                },
                 icon: const Icon(Icons.auto_awesome,
                     color: Colors.white),
                 label: const Text(

@@ -140,7 +140,7 @@ class SubscriptionProvider extends ChangeNotifier {
 
     final allPlans = [
       ...SubscriptionPlans.playerPlans,
-      SubscriptionPlans.scout,
+      ...SubscriptionPlans.scoutPlans,
     ];
 
     try {

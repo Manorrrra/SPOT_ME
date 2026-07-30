@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotme/screens/auth/register_screen.dart';
 
 import '../../utils/app_colors.dart';
 import '../../utils/app_text_styles.dart';
@@ -120,7 +121,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
       context,
       MaterialPageRoute(
         builder: (_) =>
-            const ScoutSubscriptionScreen(),
+             const RegisterScreen(),
       ),
     );
   }

@@ -18,13 +18,11 @@ class CustomAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // لون App Bar درجة أفتح شوية من خلفية الصفحة عشان يبان إنه شريط منفصل
       backgroundColor: AppColors.card,
       elevation: 0,
       centerTitle: true,
       iconTheme: const IconThemeData(color: Colors.white),
 
-      // زر الرجوع - بيرجع للصفحة اللي قبلها دايمًا
       leading: showBackButton
           ? IconButton(
               icon: const Icon(

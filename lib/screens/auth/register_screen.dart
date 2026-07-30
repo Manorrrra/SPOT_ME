@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spotme/screens/subscription/scout_subscription_screen.dart';
 
 import '../../utils/app_colors.dart';
 import '../../utils/app_text_styles.dart';
@@ -86,7 +87,7 @@ class RegisterScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.pushReplacementNamed(
                           context,
-                          AppRoutes.roleSelection,
+                          AppRoutes.scoutSubscription,
                         );
                       },
                     ),

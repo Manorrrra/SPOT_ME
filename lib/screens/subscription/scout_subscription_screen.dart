@@ -24,8 +24,9 @@ class _ScoutSubscriptionScreenState
   SubscriptionDuration selectedDuration =
       SubscriptionDuration.monthly;
 
-  final SubscriptionPlan plan =
-      SubscriptionPlans.scout;
+  // خطة السكاوت المختارة (فوتبول أو هاند بول) - افتراضيًا فوتبول
+  SubscriptionPlan selectedPlan =
+      SubscriptionPlans.scoutFootball;
 
   @override
   void didChangeDependencies() {
@@ -39,6 +40,7 @@ class _ScoutSubscriptionScreenState
     if (provider.currentPlan != null &&
         provider.currentPlan!.userType == UserType.scout) {
       selectedDuration = provider.duration;
+      selectedPlan = provider.currentPlan!;
     }
   }
 
@@ -75,6 +77,40 @@ class _ScoutSubscriptionScreenState
                   children: [
 
                     _buildHero(provider),
+
+                    const SizedBox(height: 25),
+
+                    Text(
+                      "Choose Sport",
+                      style:
+                          AppTextStyles.heading2
+                              .copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    Row(
+                      children: [
+
+                        Expanded(
+                          child: _sportCard(
+                            SubscriptionPlans
+                                .scoutFootball,
+                          ),
+                        ),
+
+                        const SizedBox(width: 15),
+
+                        Expanded(
+                          child: _sportCard(
+                            SubscriptionPlans
+                                .scoutHandball,
+                          ),
+                        ),
+                      ],
+                    ),
 
                     const SizedBox(height: 25),
 
@@ -120,7 +156,7 @@ class _ScoutSubscriptionScreenState
                         borderRadius:
                             BorderRadius.circular(24),
                         border: Border.all(
-                          color: plan.borderColor,
+                          color: selectedPlan.borderColor,
                           width: 2,
                         ),
                       ),
@@ -135,12 +171,12 @@ class _ScoutSubscriptionScreenState
                               CircleAvatar(
                                 radius: 32,
                                 backgroundColor:
-                                    plan.borderColor
+                                    selectedPlan.borderColor
                                         .withOpacity(.15),
                                 child: Icon(
-                                  plan.icon,
+                                  selectedPlan.icon,
                                   color:
-                                      plan.borderColor,
+                                      selectedPlan.borderColor,
                                   size: 34,
                                 ),
                               ),
@@ -155,7 +191,7 @@ class _ScoutSubscriptionScreenState
                                   children: [
 
                                     Text(
-                                      plan.title,
+                                      selectedPlan.title,
                                       style:
                                           AppTextStyles
                                               .heading1
@@ -169,7 +205,7 @@ class _ScoutSubscriptionScreenState
                                         height: 6),
 
                                     Text(
-                                      plan.subtitle,
+                                      selectedPlan.subtitle,
                                       style:
                                           AppTextStyles
                                               .body
@@ -189,8 +225,8 @@ class _ScoutSubscriptionScreenState
                                     selectedDuration ==
                                             SubscriptionDuration
                                                 .monthly
-                                        ? "${plan.monthlyPrice.toStringAsFixed(0)} EGP"
-                                        : "${plan.yearlyPrice.toStringAsFixed(0)} EGP",
+                                        ? "${selectedPlan.monthlyPrice.toStringAsFixed(0)} EGP"
+                                        : "${selectedPlan.yearlyPrice.toStringAsFixed(0)} EGP",
                                     style:
                                         AppTextStyles
                                             .heading1
@@ -228,7 +264,7 @@ class _ScoutSubscriptionScreenState
 
                           const SizedBox(height: 18),
 
-                          ...plan.features.map(
+                          ...selectedPlan.features.map(
                             (feature) => Padding(
                               padding:
                                   const EdgeInsets.only(
@@ -239,7 +275,7 @@ class _ScoutSubscriptionScreenState
                                   Icon(
                                     Icons.check_circle,
                                     color:
-                                        plan.borderColor,
+                                        selectedPlan.borderColor,
                                     size: 18,
                                   ),
 
@@ -423,6 +459,66 @@ class _ScoutSubscriptionScreenState
     );
   }
 
+  Widget _sportCard(SubscriptionPlan option) {
+    final selected = selectedPlan.sport == option.sport;
+
+    final String label =
+        option.sport == SportType.football
+            ? "Football"
+            : "Handball";
+
+    return InkWell(
+      onTap: () {
+        setState(() {
+          selectedPlan = option;
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: AppColors.card,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+            color: selected
+                ? option.borderColor
+                : Colors.transparent,
+            width: 2,
+          ),
+        ),
+        child: Column(
+          children: [
+
+            Icon(
+              option.icon,
+              color: option.borderColor,
+              size: 26,
+            ),
+
+            const SizedBox(height: 8),
+
+            Text(
+              label,
+              style: AppTextStyles.heading2.copyWith(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+
+            const SizedBox(height: 6),
+
+            Text(
+              "From ${option.monthlyPrice.toStringAsFixed(0)} EGP",
+              style: AppTextStyles.body.copyWith(
+                color: Colors.white70,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _durationCard(
     String title,
     SubscriptionDuration duration,
@@ -482,8 +578,8 @@ class _ScoutSubscriptionScreenState
     final double price =
         selectedDuration ==
                 SubscriptionDuration.monthly
-            ? plan.monthlyPrice
-            : plan.yearlyPrice;
+            ? selectedPlan.monthlyPrice
+            : selectedPlan.yearlyPrice;
 
     final String durationText =
         selectedDuration ==
@@ -535,7 +631,7 @@ class _ScoutSubscriptionScreenState
             }
 
             await provider.selectPlan(
-              plan,
+              selectedPlan,
               selectedDuration,
             );
 
@@ -545,9 +641,11 @@ class _ScoutSubscriptionScreenState
               context,
               MaterialPageRoute(
                 builder: (_) =>
-                    const PaymentScreen(
-                      selectedSport: "Football",
-
+                    PaymentScreen(
+                      selectedSport: selectedPlan.sport ==
+                              SportType.football
+                          ? "Football"
+                          : "Handball",
                     ),
               ),
             );

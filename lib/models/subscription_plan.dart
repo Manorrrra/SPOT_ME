@@ -8,8 +8,8 @@ enum UserType {
 enum SportType {
   football,
   handball,
-  volleyball,
-  basketball,
+  //volleyball,
+  //basketball,
 }
 
 enum SubscriptionDuration {

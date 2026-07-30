@@ -48,7 +48,7 @@ class SubscriptionPlans {
     ],
   );
 
-  static const SubscriptionPlan volleyball = SubscriptionPlan(
+  /*static const SubscriptionPlan volleyball = SubscriptionPlan(
     id: "player_volleyball",
     userType: UserType.player,
     sport: SportType.volleyball,
@@ -84,23 +84,43 @@ class SubscriptionPlans {
       "AI Coach",
     ],
   );
-
+*/
   // ===========================
-  // Scout Plan
+  // Scout Plans
   // ===========================
 
-  static const SubscriptionPlan scout = SubscriptionPlan(
-    id: "scout",
+  static const SubscriptionPlan scoutFootball = SubscriptionPlan(
+    id: "scout_football",
     userType: UserType.scout,
-    title: "Scout Premium",
-    subtitle: "For Scouts",
-    monthlyPrice: 1000,
-    yearlyPrice: 10000,
-    icon: Icons.manage_search,
+    sport: SportType.football,
+    title: "Scout Premium - Football",
+    subtitle: "For Football Scouts",
+    monthlyPrice: 2000,
+    yearlyPrice: 20000,
+    icon: Icons.sports_soccer,
     borderColor: AppColors.red,
     isPopular: true,
     features: [
-      "Unlimited Player Search",
+      "Unlimited Football Player Search",
+      "Advanced Filters",
+      "Contact Players",
+      "AI Recommendations",
+      "Unlimited Reports",
+    ],
+  );
+
+  static const SubscriptionPlan scoutHandball = SubscriptionPlan(
+    id: "scout_handball",
+    userType: UserType.scout,
+    sport: SportType.handball,
+    title: "Scout Premium - Handball",
+    subtitle: "For Handball Scouts",
+    monthlyPrice: 1000,
+    yearlyPrice: 10000,
+    icon: Icons.sports_handball,
+    borderColor: AppColors.blue,
+    features: [
+      "Unlimited Handball Player Search",
       "Advanced Filters",
       "Contact Players",
       "AI Recommendations",
@@ -115,12 +135,13 @@ class SubscriptionPlans {
   static const List<SubscriptionPlan> playerPlans = [
     football,
     handball,
-    volleyball,
-    basketball,
+    /* volleyball, */
+    /* basketball, */
   ];
 
   static const List<SubscriptionPlan> scoutPlans = [
-    scout,
+    scoutFootball,
+    scoutHandball,
   ];
 
   static List<SubscriptionPlan> get allPlans => [

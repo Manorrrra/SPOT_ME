@@ -23,4 +23,5 @@ class AppRoutes {
   static const scoutSubscription = "/scoutSubscription";
   static const subscription = "/subscription";
   static const aiCvGenerator = "/aiCvGenerator";
+  static const adminDashboard = "/adminDashboard";
 }
