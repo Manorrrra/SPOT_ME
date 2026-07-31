@@ -1,6 +1,13 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:math';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../data/ads_data.dart';
+import '../../providers/player_providers.dart';
 import '../../utils/app_colors.dart';
+import '../../widgets/ad_overlay.dart';
 import '../../widgets/player_bottom_nav_bar.dart';
 
 import '../player/player_home_screen.dart';
@@ -26,6 +33,7 @@ class _PlayerNavigationScreenState extends State<PlayerNavigationScreen> {
   int currentIndex = 0;
 
   late final List<Widget> pages;
+  Timer? _adTimer;
 
   @override
   void initState() {
@@ -39,6 +47,33 @@ class _PlayerNavigationScreenState extends State<PlayerNavigationScreen> {
       PlayerProfileScreen(selectedSport: widget.selectedSport),
       const SettingsScreen(),
     ];
+
+    // Show a sponsored ad right when the app opens...
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showRandomAd());
+
+    // ...then again every 2.5 minutes while the player is using the app.
+    _adTimer = Timer.periodic(
+      const Duration(minutes: 2, seconds: 30),
+      (_) => _showRandomAd(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _adTimer?.cancel();
+    super.dispose();
+  }
+
+  void _showRandomAd() {
+    if (!mounted) return;
+
+    final sport = context.read<PlayerProvider>().selectedSport;
+    final candidates = AdsData.forSport(
+      sport.isNotEmpty ? sport : widget.selectedSport,
+    );
+    final ad = candidates[Random().nextInt(candidates.length)];
+
+    showAdOverlay(context, ad);
   }
 
   @override
