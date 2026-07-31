@@ -11,6 +11,8 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
+  final bool readOnly;
+  final VoidCallback? onTap;
 
   const CustomTextField({
     super.key,
@@ -21,6 +23,8 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.validator,
     this.autovalidateMode,
+    this.readOnly = false,
+    this.onTap,
   });
 
   @override
@@ -46,6 +50,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator,
       autovalidateMode:
           widget.autovalidateMode ?? AutovalidateMode.onUserInteraction,
+      readOnly: widget.readOnly,
+      onTap: widget.onTap,
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: AppTextStyles.body.copyWith(color: Colors.white54),

@@ -1,11 +1,74 @@
 import 'package:flutter/material.dart';
 
+import '../utils/app_colors.dart';
+import '../utils/app_text_styles.dart';
 import '../utils/app_validators.dart';
 import 'custom_text_field.dart';
 
-class BasicInformationForm extends StatelessWidget {
+class BasicInformationForm extends StatefulWidget {
   const BasicInformationForm({super.key});
 
+  @override
+  State<BasicInformationForm> createState() => _BasicInformationFormState();
+}
+
+class _BasicInformationFormState extends State<BasicInformationForm> {
+
+  final TextEditingController _genderController = TextEditingController();
+ 
+  @override
+  void dispose() {
+    _genderController.dispose();
+    super.dispose();
+  }
+ 
+  void _pickGender() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.card,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 8),
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white24,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const SizedBox(height: 12),
+              ListTile(
+                leading: const Icon(Icons.male, color: AppColors.blue),
+                title: Text("Male", style: AppTextStyles.body.copyWith(color: Colors.white)),
+                onTap: () {
+                  setState(() => _genderController.text = "Male");
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.female, color: AppColors.blue),
+                title: Text("Female", style: AppTextStyles.body.copyWith(color: Colors.white)),
+                onTap: () {
+                  setState(() => _genderController.text = "Female");
+                  Navigator.pop(context);
+                },
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,6 +91,25 @@ class BasicInformationForm extends StatelessWidget {
         const SizedBox(height: 18),
 
         CustomTextField(
+          hintText: "Password",
+          prefixIcon: Icons.lock_outline,
+          isPassword: true,
+          validator: AppValidators.password,
+        ),
+
+        const SizedBox(height: 18),
+
+        CustomTextField(
+          hintText: "Confirm Password",
+          prefixIcon: Icons.lock_outline,
+          isPassword: true,
+          validator: (value) =>
+              AppValidators.required(value, fieldName: 'Confirm password'),
+        ),
+
+        const SizedBox(height: 18),
+
+        CustomTextField(
           hintText: "Phone Number",
           prefixIcon: Icons.phone_outlined,
           keyboardType: TextInputType.phone,
@@ -45,12 +127,16 @@ class BasicInformationForm extends StatelessWidget {
 
         const SizedBox(height: 18),
 
-        CustomTextField(
+       CustomTextField(
           hintText: "Gender",
           prefixIcon: Icons.wc_outlined,
+          controller: _genderController,
+          readOnly: true,
+          onTap: _pickGender,
           validator: (value) =>
               AppValidators.required(value, fieldName: 'Gender'),
         ),
+ 
 
         const SizedBox(height: 18),
 
@@ -115,16 +201,10 @@ class BasicInformationForm extends StatelessWidget {
           hintText: "Years of Experience",
           prefixIcon: Icons.workspace_premium_outlined,
           keyboardType: TextInputType.number,
-          validator: (value) => AppValidators.required(
-            value,
-            fieldName: 'Years of experience',
-          ),
+          validator: (value) =>
+              AppValidators.required(value, fieldName: 'Years of experience'),
         ),
       ],
     );
   }
 }
-      
-
-          
-   

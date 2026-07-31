@@ -18,24 +18,16 @@ class ScoutSubscriptionScreen extends StatefulWidget {
       _ScoutSubscriptionScreenState();
 }
 
-class _ScoutSubscriptionScreenState
-    extends State<ScoutSubscriptionScreen> {
+class _ScoutSubscriptionScreenState extends State<ScoutSubscriptionScreen> {
+  SubscriptionDuration selectedDuration = SubscriptionDuration.monthly;
 
-  SubscriptionDuration selectedDuration =
-      SubscriptionDuration.monthly;
-
-  // خطة السكاوت المختارة (فوتبول أو هاند بول) - افتراضيًا فوتبول
-  SubscriptionPlan selectedPlan =
-      SubscriptionPlans.scoutFootball;
+  SubscriptionPlan selectedPlan = SubscriptionPlans.scoutFootball;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final provider = Provider.of<SubscriptionProvider>(
-      context,
-      listen: false,
-    );
+    final provider = Provider.of<SubscriptionProvider>(context, listen: false);
 
     if (provider.currentPlan != null &&
         provider.currentPlan!.userType == UserType.scout) {
@@ -51,40 +43,27 @@ class _ScoutSubscriptionScreenState
     return Scaffold(
       backgroundColor: AppColors.background,
 
-      bottomNavigationBar:
-          _buildBottomButton(provider),
+      bottomNavigationBar: _buildBottomButton(provider),
 
       body: SafeArea(
         child: Column(
           children: [
-
             _buildHeader(),
 
             Expanded(
               child: SingleChildScrollView(
-                physics:
-                    const BouncingScrollPhysics(),
-                padding:
-                    const EdgeInsets.fromLTRB(
-                  20,
-                  16,
-                  20,
-                  30,
-                ),
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-
                     _buildHero(provider),
 
                     const SizedBox(height: 25),
 
                     Text(
                       "Choose Sport",
-                      style:
-                          AppTextStyles.heading2
-                              .copyWith(
+                      style: AppTextStyles.heading2.copyWith(
                         color: Colors.white,
                       ),
                     ),
@@ -93,21 +72,14 @@ class _ScoutSubscriptionScreenState
 
                     Row(
                       children: [
-
                         Expanded(
-                          child: _sportCard(
-                            SubscriptionPlans
-                                .scoutFootball,
-                          ),
+                          child: _sportCard(SubscriptionPlans.scoutFootball),
                         ),
 
                         const SizedBox(width: 15),
 
                         Expanded(
-                          child: _sportCard(
-                            SubscriptionPlans
-                                .scoutHandball,
-                          ),
+                          child: _sportCard(SubscriptionPlans.scoutHandball),
                         ),
                       ],
                     ),
@@ -116,9 +88,7 @@ class _ScoutSubscriptionScreenState
 
                     Text(
                       "Subscription Duration",
-                      style:
-                          AppTextStyles.heading2
-                              .copyWith(
+                      style: AppTextStyles.heading2.copyWith(
                         color: Colors.white,
                       ),
                     ),
@@ -127,7 +97,6 @@ class _ScoutSubscriptionScreenState
 
                     Row(
                       children: [
-
                         Expanded(
                           child: _durationCard(
                             "Monthly",
@@ -149,34 +118,27 @@ class _ScoutSubscriptionScreenState
                     const SizedBox(height: 30),
 
                     Container(
-                      padding:
-                          const EdgeInsets.all(22),
+                      padding: const EdgeInsets.all(22),
                       decoration: BoxDecoration(
                         color: AppColors.card,
-                        borderRadius:
-                            BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(24),
                         border: Border.all(
                           color: selectedPlan.borderColor,
                           width: 2,
                         ),
                       ),
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
                           Row(
                             children: [
-
                               CircleAvatar(
                                 radius: 32,
-                                backgroundColor:
-                                    selectedPlan.borderColor
-                                        .withOpacity(.15),
+                                backgroundColor: selectedPlan.borderColor
+                                    .withOpacity(.15),
                                 child: Icon(
                                   selectedPlan.icon,
-                                  color:
-                                      selectedPlan.borderColor,
+                                  color: selectedPlan.borderColor,
                                   size: 34,
                                 ),
                               ),
@@ -185,33 +147,21 @@ class _ScoutSubscriptionScreenState
 
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment
-                                          .start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-
                                     Text(
                                       selectedPlan.title,
-                                      style:
-                                          AppTextStyles
-                                              .heading1
-                                              .copyWith(
-                                        color:
-                                            Colors.white,
+                                      style: AppTextStyles.heading1.copyWith(
+                                        color: Colors.white,
                                       ),
                                     ),
 
-                                    const SizedBox(
-                                        height: 6),
+                                    const SizedBox(height: 6),
 
                                     Text(
                                       selectedPlan.subtitle,
-                                      style:
-                                          AppTextStyles
-                                              .body
-                                              .copyWith(
-                                        color: Colors
-                                            .white70,
+                                      style: AppTextStyles.body.copyWith(
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -220,34 +170,23 @@ class _ScoutSubscriptionScreenState
 
                               Column(
                                 children: [
-
                                   Text(
                                     selectedDuration ==
-                                            SubscriptionDuration
-                                                .monthly
+                                            SubscriptionDuration.monthly
                                         ? "${selectedPlan.monthlyPrice.toStringAsFixed(0)} EGP"
                                         : "${selectedPlan.yearlyPrice.toStringAsFixed(0)} EGP",
-                                    style:
-                                        AppTextStyles
-                                            .heading1
-                                            .copyWith(
-                                      color:
-                                          AppColors.red,
+                                    style: AppTextStyles.heading1.copyWith(
+                                      color: AppColors.red,
                                     ),
                                   ),
 
                                   Text(
                                     selectedDuration ==
-                                            SubscriptionDuration
-                                                .monthly
+                                            SubscriptionDuration.monthly
                                         ? "/ Month"
                                         : "/ Year",
-                                    style:
-                                        AppTextStyles
-                                            .body
-                                            .copyWith(
-                                      color: Colors
-                                          .white60,
+                                    style: AppTextStyles.body.copyWith(
+                                      color: Colors.white60,
                                     ),
                                   ),
                                 ],
@@ -257,40 +196,28 @@ class _ScoutSubscriptionScreenState
 
                           const SizedBox(height: 22),
 
-                          Divider(
-                            color: Colors.white
-                                .withOpacity(.08),
-                          ),
+                          Divider(color: Colors.white.withOpacity(.08)),
 
                           const SizedBox(height: 18),
 
                           ...selectedPlan.features.map(
                             (feature) => Padding(
-                              padding:
-                                  const EdgeInsets.only(
-                                      bottom: 14),
+                              padding: const EdgeInsets.only(bottom: 14),
                               child: Row(
                                 children: [
-
                                   Icon(
                                     Icons.check_circle,
-                                    color:
-                                        selectedPlan.borderColor,
+                                    color: selectedPlan.borderColor,
                                     size: 18,
                                   ),
 
-                                  const SizedBox(
-                                      width: 10),
+                                  const SizedBox(width: 10),
 
                                   Expanded(
                                     child: Text(
                                       feature,
-                                      style:
-                                          AppTextStyles
-                                              .body
-                                              .copyWith(
-                                        color:
-                                            Colors.white,
+                                      style: AppTextStyles.body.copyWith(
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -310,12 +237,10 @@ class _ScoutSubscriptionScreenState
       ),
     );
   }
-    Widget _buildHeader() {
+
+  Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 18,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
       child: Row(
         children: [
           InkWell(
@@ -354,19 +279,14 @@ class _ScoutSubscriptionScreenState
               gradient: AppColors.redGradient,
               borderRadius: BorderRadius.circular(14),
             ),
-            child: const Icon(
-              Icons.workspace_premium,
-              color: Colors.white,
-            ),
+            child: const Icon(Icons.workspace_premium, color: Colors.white),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildHero(
-    SubscriptionProvider provider,
-  ) {
+  Widget _buildHero(SubscriptionProvider provider) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -376,7 +296,6 @@ class _ScoutSubscriptionScreenState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Text(
             "Unlock Scout Premium",
             style: AppTextStyles.heading1.copyWith(
@@ -396,9 +315,7 @@ class _ScoutSubscriptionScreenState
           ),
 
           if (provider.isPremium &&
-              provider.currentPlan?.userType ==
-                  UserType.scout) ...[
-
+              provider.currentPlan?.userType == UserType.scout) ...[
             const SizedBox(height: 20),
 
             Container(
@@ -410,12 +327,7 @@ class _ScoutSubscriptionScreenState
               ),
               child: Column(
                 children: [
-
-                  const Icon(
-                    Icons.verified,
-                    color: Colors.green,
-                    size: 40,
-                  ),
+                  const Icon(Icons.verified, color: Colors.green, size: 40),
 
                   const SizedBox(height: 10),
 
@@ -432,9 +344,7 @@ class _ScoutSubscriptionScreenState
                     provider.isMonthly
                         ? "Monthly Subscription"
                         : "Yearly Subscription",
-                    style: AppTextStyles.body.copyWith(
-                      color: Colors.white70,
-                    ),
+                    style: AppTextStyles.body.copyWith(color: Colors.white70),
                   ),
 
                   if (provider.endDate != null) ...[
@@ -445,9 +355,7 @@ class _ScoutSubscriptionScreenState
                       "${provider.endDate!.day}/"
                       "${provider.endDate!.month}/"
                       "${provider.endDate!.year}",
-                      style: AppTextStyles.body.copyWith(
-                        color: Colors.white70,
-                      ),
+                      style: AppTextStyles.body.copyWith(color: Colors.white70),
                     ),
                   ],
                 ],
@@ -462,11 +370,19 @@ class _ScoutSubscriptionScreenState
   Widget _sportCard(SubscriptionPlan option) {
     final selected = selectedPlan.sport == option.sport;
 
-    final String label =
-        option.sport == SportType.football
-            ? "Football"
-            : "Handball";
-
+    final String label;
+    // option.sport == SportType.football
+    //  ? "Football"
+    //: "Handball";
+    if (option.sport == SportType.football) {
+      label = "Football";
+    }
+    else if (option.sport == SportType.basketball) {
+      label = "Basketball";
+    }
+    else {
+      label = "Handball";
+    }
     return InkWell(
       onTap: () {
         setState(() {
@@ -480,20 +396,13 @@ class _ScoutSubscriptionScreenState
           color: AppColors.card,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: selected
-                ? option.borderColor
-                : Colors.transparent,
+            color: selected ? option.borderColor : Colors.transparent,
             width: 2,
           ),
         ),
         child: Column(
           children: [
-
-            Icon(
-              option.icon,
-              color: option.borderColor,
-              size: 26,
-            ),
+            Icon(option.icon, color: option.borderColor, size: 26),
 
             const SizedBox(height: 8),
 
@@ -509,9 +418,7 @@ class _ScoutSubscriptionScreenState
 
             Text(
               "From ${option.monthlyPrice.toStringAsFixed(0)} EGP",
-              style: AppTextStyles.body.copyWith(
-                color: Colors.white70,
-              ),
+              style: AppTextStyles.body.copyWith(color: Colors.white70),
             ),
           ],
         ),
@@ -519,12 +426,8 @@ class _ScoutSubscriptionScreenState
     );
   }
 
-  Widget _durationCard(
-    String title,
-    SubscriptionDuration duration,
-  ) {
-    final selected =
-        selectedDuration == duration;
+  Widget _durationCard(String title, SubscriptionDuration duration) {
+    final selected = selectedDuration == duration;
 
     return InkWell(
       onTap: () {
@@ -539,32 +442,24 @@ class _ScoutSubscriptionScreenState
           color: AppColors.card,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: selected
-                ? AppColors.red
-                : Colors.transparent,
+            color: selected ? AppColors.red : Colors.transparent,
             width: 2,
           ),
         ),
         child: Column(
           children: [
-
             Text(
               title,
-              style: AppTextStyles.heading2.copyWith(
-                color: Colors.white,
-              ),
+              style: AppTextStyles.heading2.copyWith(color: Colors.white),
             ),
 
             const SizedBox(height: 8),
 
             Text(
-              duration ==
-                      SubscriptionDuration.monthly
+              duration == SubscriptionDuration.monthly
                   ? "Pay Every Month"
                   : "Best Value",
-              style: AppTextStyles.body.copyWith(
-                color: Colors.white70,
-              ),
+              style: AppTextStyles.body.copyWith(color: Colors.white70),
             ),
           ],
         ),
@@ -572,28 +467,17 @@ class _ScoutSubscriptionScreenState
     );
   }
 
-  Widget _buildBottomButton(
-    SubscriptionProvider provider,
-  ) {
-    final double price =
-        selectedDuration ==
-                SubscriptionDuration.monthly
-            ? selectedPlan.monthlyPrice
-            : selectedPlan.yearlyPrice;
+  Widget _buildBottomButton(SubscriptionProvider provider) {
+    final double price = selectedDuration == SubscriptionDuration.monthly
+        ? selectedPlan.monthlyPrice
+        : selectedPlan.yearlyPrice;
 
-    final String durationText =
-        selectedDuration ==
-                SubscriptionDuration.monthly
-            ? "Month"
-            : "Year";
+    final String durationText = selectedDuration == SubscriptionDuration.monthly
+        ? "Month"
+        : "Year";
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(
-        20,
-        16,
-        20,
-        20,
-      ),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
@@ -607,19 +491,15 @@ class _ScoutSubscriptionScreenState
       child: SafeArea(
         top: false,
         child: CustomButton(
-          text: provider.isPremium &&
-                  provider.currentPlan?.userType ==
-                      UserType.scout
+          text:
+              provider.isPremium &&
+                  provider.currentPlan?.userType == UserType.scout
               ? "Manage Subscription"
               : "Continue • ${price.toStringAsFixed(0)} EGP / $durationText",
           onPressed: () async {
-
             if (provider.isPremium &&
-                provider.currentPlan?.userType ==
-                    UserType.scout) {
-
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(
+                provider.currentPlan?.userType == UserType.scout) {
+              ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text(
                     "You already have an active Scout Premium subscription.",
@@ -630,23 +510,18 @@ class _ScoutSubscriptionScreenState
               return;
             }
 
-            await provider.selectPlan(
-              selectedPlan,
-              selectedDuration,
-            );
+            await provider.selectPlan(selectedPlan, selectedDuration);
 
             if (!mounted) return;
 
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) =>
-                    PaymentScreen(
-                      selectedSport: selectedPlan.sport ==
-                              SportType.football
-                          ? "Football"
-                          : "Handball",
-                    ),
+                builder: (_) => PaymentScreen(
+                  selectedSport: selectedPlan.sport == SportType.football
+                      ? "Football"
+                      : "Handball",
+                ),
               ),
             );
           },

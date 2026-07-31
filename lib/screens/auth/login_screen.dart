@@ -9,6 +9,7 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../utils/admin_credentials.dart';
+import 'package:spotme/mock_players.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -144,7 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRoutes.roleSelection);
+                        Navigator.pushNamed(context, 
+                        AppRoutes.roleSelection);
                       },
                       child: Text(
                         "Register",

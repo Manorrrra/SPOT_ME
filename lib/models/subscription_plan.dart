@@ -9,7 +9,7 @@ enum SportType {
   football,
   handball,
   //volleyball,
-  //basketball,
+  basketball,
 }
 
 enum SubscriptionDuration {

@@ -188,7 +188,23 @@ class MockPlayers {
     ),
   ];
 
+
   static List<PlayerModel> bySport(String sport) {
     return all.where((p) => p.sport == sport).toList();
+  }
+}
+
+
+class MockAccounts {
+  MockAccounts._();
+ 
+  static final Set<String> _registeredEmails = {};
+ 
+  static void register(String email) {
+    _registeredEmails.add(email.trim().toLowerCase());
+  }
+ 
+  static bool exists(String email) {
+    return _registeredEmails.contains(email.trim().toLowerCase());
   }
 }

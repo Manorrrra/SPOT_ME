@@ -29,12 +29,12 @@ class RegisterScreen extends StatelessWidget {
 
               const SizedBox(height: 35),
 
-              Text("Create Account", style: AppTextStyles.heading3),
+              Text("Create scout Account", style: AppTextStyles.heading3),
 
               const SizedBox(height: 6),
 
               Text(
-                "Create your account to start your journey with SpotMe.",
+                "Create your scout account to start discovering talents.",
                 style: AppTextStyles.body.copyWith(color: Colors.white70),
               ),
 
@@ -61,6 +61,20 @@ class RegisterScreen extends StatelessWidget {
                       hintText: "Email Address",
                       prefixIcon: Icons.email_outlined,
                       keyboardType: TextInputType.emailAddress,
+                    ),
+
+                    const SizedBox(height: 18),
+ 
+                    const CustomTextField(
+                      hintText: "Nationality",
+                      prefixIcon: Icons.flag_outlined,
+                    ),
+
+                     const SizedBox(height: 18),
+ 
+                    const CustomTextField(
+                      hintText: "Current Club",
+                      prefixIcon: Icons.groups_outlined,
                     ),
 
                     const SizedBox(height: 18),
